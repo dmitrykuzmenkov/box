@@ -8,7 +8,7 @@ if [[ -z $1 ]]; then
 fi
 
 # Get systemctl bin
-sctl=(which systemctl)
+sctl=$(which systemctl)
 if [[ -z $sctl ]]; then
   echo 'There is no systemd. No systemctl found.' && exit 255
 fi

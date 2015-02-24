@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ $EUID -ne 0 ]]; then
+   echo 'This script must be run as root' && exit 255
+fi
+
 if [[ -z $1 ]]; then
   echo 'Usage: '$0' [box-name]' && exit 255
 fi
@@ -18,13 +22,16 @@ fi
 
 if [[ -f /usr/lib/systemd/system/$1.service ]]; then
   echo 'Deleting existing service...'
-  /bin/rm -f /usr/lib/systemd/system/$1.service
   $sctl stop $1.service
   $sctl disable $1.service
+  /bin/rm -f /usr/lib/systemd/system/$1.service
 fi
 
 echo 'Linking systemd...'
-ln -s /home/box/systemd/$1.service /usr/lib/systemd/system/$1.service
+ln -P /home/box/systemd/$1.service /usr/lib/systemd/system/$1.service
+
+echo 'Reloading systemd...'
+$sctl daemon-reload
 
 echo 'Enabling service by default and starting it...'
 $sctl enable $1.service

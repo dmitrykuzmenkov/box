@@ -6,8 +6,7 @@ After=network.target
 [Service]
 Type=simple
 User=box
-EnvironmentFile=/home/box/memcached/config
-ExecStart=/usr/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
+ExecStart=/usr/bin/memcached -p 11211 -m 64 -c 1024
 TimeoutSec=60
 PrivateTmp=true
 

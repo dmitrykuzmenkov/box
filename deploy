@@ -3,4 +3,4 @@ if [[ -z $1 ]]; then
   echo 'Usage: '$0' [box@server]' && exit 255
 fi
 
-rsync -aiz --exclude=deploy $(dirname $0)/* box@$1:/home/box/
+rsync -aiz --exclude=deploy --exclude=.git --exclude=.gitignore $(dirname $0)/* box@$1:/home/box/

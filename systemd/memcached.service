@@ -1,0 +1,16 @@
+[Unit]
+Description=Memcached
+Before=nginx.service
+After=network.target
+
+[Service]
+Type=simple
+User=box
+EnvironmentFile=/home/box/memcached/config
+ExecStart=/usr/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
+TimeoutSec=60
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

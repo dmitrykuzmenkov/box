@@ -36,3 +36,7 @@ $sctl daemon-reload
 echo 'Enabling service by default and starting it...'
 $sctl enable $1.service
 $sctl start $1.service
+
+i_file=$(pwd)/used
+[[ ! -f $i_file ]] && touch $i_file
+echo $1 >> $i_file

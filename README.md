@@ -1,6 +1,9 @@
 # Box server deployment
 Box used for isolate used processes in project environment. It makes deployment and manage of services more easier.
 
+# Dependency
+You must use Systemd as upstart service
+
 # Phylosophy
 - There are internal server things
 - There are services that must be run on your server in special environment

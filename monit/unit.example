@@ -1,0 +1,5 @@
+check process application
+  with pidfile "/var/run/application.pid"
+  start program = "/usr/bin/bash -c 'application 2>&1 > /var/log/application.log & echo -n $! > /var/run/application.pid'"
+  stop program = "/usr/bin/bash -c 'pgrep -f application | xargs kill'"
+  if not exist then alert

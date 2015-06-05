@@ -1,5 +1,5 @@
 check process php-fpm
   with pidfile "/home/box/php/php-fpm.pid"
-  start program = "/home/box/service start php-fpm"
-  stop program = "/home/box/service stop php-fpm"
+  start program = "/usr/bin/bash -l -c 'php-fpm -c /home/box/php/php.ini -y /home/box/php/php-fpm.conf --nodaemonize'"
+  stop program = "/usr/bin/bash -l -c 'kill `cat /home/box/php/php-fpm.pid`'"
   if not exist then alert

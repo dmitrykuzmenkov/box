@@ -1,5 +1,5 @@
 check process mysql
   with pidfile "/home/box/mysql/mysql.pid"
-  start program = "/home/box/service start mysql"
-  stop program = "/home/box/service stop mysql"
+  start program = "/usr/bin/bash -l -c 'mysqld_safe --no-auto-restart --nowatch --defaults-file=/home/box/mysql/mysql.conf'"
+  stop program = "/usr/bin/bash -l -c 'kill `cat /home/box/mysql/mysql.pid`'"
   if not exist then alert

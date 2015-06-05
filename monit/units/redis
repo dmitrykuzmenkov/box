@@ -1,5 +1,5 @@
 check process redis
   with pidfile "/home/box/redis/redis.pid"
-  start program = "/home/box/service start redis"
-  stop program = "/home/box/service stop redis"
+  start program = "/usr/bin/bash -l -c 'redis-server /home/box/redis/redis.conf'"
+  stop program = "/usr/bin/bash -l -c 'kill `cat /home/box/redis/redis.pid`'"
   if not exist then alert

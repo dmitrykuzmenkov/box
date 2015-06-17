@@ -1,16 +1,3 @@
 #!/bin/bash
-if [[ -z $2 ]]; then
-  echo 'Usage: '$0' [start|stop|restart|status] [all|"service1 service2"]' && exit 255
-fi
-sysctl=$(which systemctl)
-$sysctl daemon-reload
-
-if [[ "$2" == "all" ]]; then
-  for service in $(cat `pwd $0`/used); do
-    $sysctl $1 $service.service
-  done
-else
-  for service in $2; do
-    $sysctl $1 $service.service
-  done
-fi
+monit='sudo -u box '$(which monit)' -c /home/box/monit/monit.conf'
+$monit $1 $2

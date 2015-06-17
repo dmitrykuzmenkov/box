@@ -1,41 +1,32 @@
 #!/bin/bash
-if [[ $EUID -ne 0 ]]; then
-   echo 'This script must be run as root' && exit 255
-fi
-
 if [[ -z $1 ]]; then
   echo 'Usage: '$0' [box-name]' && exit 255
 fi
 
-# Get systemctl bin
-sctl=$(which systemctl)
-if [[ -z $sctl ]]; then
-  echo 'There is no systemd. No systemctl found.' && exit 255
+monit=$(which monit)
+if [[ -z "$monit" ]]; then
+  echo 'Install monit and run prepare script first' && exit 255
 fi
 
-# Check service exists
 bin=$(which $1)
-
 if [[ -z $bin ]]; then
   echo 'Service not found. Please insall '$1' first.' && exit 255
 fi
 
-if [[ -f /usr/lib/systemd/system/$1.service ]]; then
+
+if [[ -f /home/box/monit/units/$1 ]]; then
   echo 'Deleting existing service...'
-  $sctl stop $1.service
-  $sctl disable $1.service
-  /bin/rm -f /usr/lib/systemd/system/$1.service
+  ./service stop $1
+  /bin/rm -f /home/box/monit/units/$1
+  ./service reload
 fi
 
-echo 'Linking systemd...'
-ln -P /home/box/systemd/$1.service /usr/lib/systemd/system/$1.service
+echo 'Linking monit unit...'
+ln -P /home/box/$1/$1.monit /home/box/monit/units/$1
 
-echo 'Reloading systemd...'
-$sctl daemon-reload
-
-echo 'Enabling service by default and starting it...'
-$sctl enable $1.service
-$sctl start $1.service
+echo 'Reloading monit...'
+./service reload
+./service start $1
 
 i_file=$(pwd)/used
 [[ ! -f $i_file ]] && touch $i_file

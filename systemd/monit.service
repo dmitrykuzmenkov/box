@@ -5,8 +5,10 @@ After=network.target
 [Service]
 Type=simple
 User=box
-ExecStart=/usr/bin/monit -c /home/box/monit/monit.conf
-TimeoutSec=60
+ExecStart=/bin/monit -c /home/box/monit/monit.conf -I
+ExecStop=/bin/monit -c /home/box/monit/monit.conf quite
+ExecReload=/bin/monit -c /home/box/monit/monit.conf reload
+TimeoutSec=5
 PrivateTmp=true
 
 [Install]

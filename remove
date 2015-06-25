@@ -1,22 +1,27 @@
 #!/bin/bash
+if [[ $EUID -ne 0 ]]; then
+   echo 'This script must be run as root' && exit 255
+fi
+
 if [[ -z $1 ]]; then
   echo 'Usage: '$0' [box-name]' && exit 255
 fi
 
 # Get systemctl bin
-monit=$(which monit)
-if [[ -z "$monit" ]]; then
-  echo 'Install monit and run prepare script first' && exit 255
+sctl=$(which systemctl)
+if [[ -z $sctl ]]; then
+  echo 'There is no systemd. No systemctl found.' && exit 255
 fi
 
-if [[ -f /home/box/monit/units/$1 ]]; then
+if [[ -f /usr/lib/systemd/system/$1.service ]]; then
   echo 'Deleting existing service...'
-  ./service stop $1
-  /bin/rm -f /home/box/monit/units/$1
+  $sctl stop $1.service
+  $sctl disable $1.service
+  /bin/rm -f /usr/lib/systemd/system/$1.service
 fi
 
-echo 'Reloading monit...'
-./service reload
+echo 'Reloading systemd...'
+$sctl daemon-reload
 
 i_file=$(pwd)/used
 [[ -f $i_file ]] && grep -v ^$1$ $i_file > $i_file.tmp && mv -f $i_file.tmp $i_file

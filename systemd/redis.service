@@ -1,11 +1,11 @@
 [Unit]
-Description=Monit
+Description=Redis server
 After=network.target
 
 [Service]
 Type=simple
 User=box
-ExecStart=/usr/bin/monit -c /home/box/monit/monit.conf
+ExecStart=/usr/bin/redis /home/box/redis/redis.conf
 TimeoutSec=60
 PrivateTmp=true
 

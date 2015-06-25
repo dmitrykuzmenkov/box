@@ -11,7 +11,6 @@ You must use Systemd as upstart service
 - There are folder named by service and systemd folder to operate it via systemd
 - You can install one or more service on one machine
 - You can deploy box manager to machines but use only couple of services
-- All services are managed by monit
 
 ## Structure
 There is folder in root dir. One folder is one service. In folder there is log dir, configs, run files, socks and so on. That allows to isolate service generated files into one single dir.
@@ -21,14 +20,15 @@ It helps you to isolate running services and dont bother about different folders
 ### Example structure
 * service1
   * service1.conf
-  * service1.monit
   * log
   * service1.pid
 * service2
   * service2.conf
-  * service2.monit
   * log
   * service2.pid
+* systemd
+  * service1.service
+  * service2.service
 
 You can create any service you want and manage it via box tools.
 
@@ -42,12 +42,6 @@ Now you can deploy it to you server with deploy script. Be sure you have created
 ```bash
 cd box
 ./deploy myserver
-```
-
-After deploying under box user you should log in on server and run prepare script by root
-```bash
-cd box
-./prepare
 ```
 
 Ok. Finally done. Log into server and do cool stuff.
@@ -67,7 +61,7 @@ You can remove service from system using remove script
 This command will remove systemd.service file, stop running service and remove line from used file where all installed services stored.
 
 ## Manage installed services
-Use speicial script 'service' to manage services. It wraps monit with custom config
+There is special util to manage installed services. It's called service. It is systemctl like functionality.
 ```bash
 ./service start all
 ```

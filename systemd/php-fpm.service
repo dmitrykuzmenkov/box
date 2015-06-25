@@ -1,0 +1,16 @@
+[Unit]
+Description=The PHP FastCGI Process Manager
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+PIDFile=/home/box/php/php-fpm.pid
+ExecStart=/sbin/php-fpm -c /home/box/php/php.ini -y /home/box/php/php-fpm.conf --nodaemonize
+ExecReload=/bin/kill -USR2 $MAINPID
+TimeoutSec=60
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

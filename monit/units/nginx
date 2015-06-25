@@ -1,5 +1,5 @@
 check process nginx
   with pidfile "/home/box/nginx/nginx.pid"
-  start program = "/usr/bin/bash -l -c 'nginx -c /home/box/nginx/nginx.conf'"
-  stop program = "/usr/bin/bash -l -c 'nginx -c /home/box/nginx/nginx.conf -s stop'"
+  start program = "/home/box/service start nginx"
+  stop program = "/home/box/service stop nginx"
   if not exist then alert

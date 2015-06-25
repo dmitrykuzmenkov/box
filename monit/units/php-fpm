@@ -1,5 +1,0 @@
-check process php-fpm
-  with pidfile "/home/box/php/php-fpm.pid"
-  start program = "/home/box/service start php-fpm"
-  stop program = "/home/box/service stop php-fpm"
-  if not exist then alert

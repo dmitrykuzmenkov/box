@@ -1,5 +1,0 @@
-check process mysql
-  with pidfile "/home/box/mysql/mysql.pid"
-  start program = "/home/box/service start mysql"
-  stop program = "/home/box/service stop mysql"
-  if not exist then alert

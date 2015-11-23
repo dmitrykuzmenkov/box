@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if [[ -z $1 ]]; then
   echo 'Usage: '$0' [box@server]' && exit 255
 fi

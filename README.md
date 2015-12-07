@@ -4,7 +4,7 @@ Box used for isolate used processes in project environment. It makes deployment 
 ## Dependency
 You must use Systemd as upstart service
 
-## Phylosophy
+## Philosophy
 - There are internal server things
 - There are services that must be run on your server in special environment
 - This special environment is set to box user and all you need in one folder

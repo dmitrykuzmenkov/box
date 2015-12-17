@@ -7,10 +7,9 @@ After=network.target
 Type=simple
 User=box
 # per bug #547485
-ExecStart=/usr/bin/mysqld_safe --defaults-file=/home/box/mysql/mysql.conf 
+ExecStart=/usr/bin/mysqld_safe --defaults-file=/home/box/mysql/mysql.conf
 TimeoutSec=60
 PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
-
